@@ -39,3 +39,46 @@ main {
 section {
   flex: 1;
 }
+
+img {
+  height: 56px;
+  width: 56px;
+}
+
+#weather-data {
+  width: 100%;
+  margin-top: 24px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.weather-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.2);
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 24px 20px 40px;
+}
+
+/* .today {
+  grid-column: 1 / -1;
+} */
+
+.weather-card > * {
+  grid-column: 1 / span 2;
+}
+
+.date {
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.current-temp {
+  font-size: 3rem;
+  font-weight: bold;
+}
