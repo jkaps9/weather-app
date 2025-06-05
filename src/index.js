@@ -41,10 +41,12 @@ function makeDayCard(
     card.classList.add("today");
   }
 
-  const datePara = document.createElement("p");
-  datePara.classList.add("date");
-  datePara.textContent = date;
-  card.appendChild(datePara);
+  if (!isToday) {
+    const datePara = document.createElement("p");
+    datePara.classList.add("date");
+    datePara.textContent = date;
+    card.appendChild(datePara);
+  }
 
   const weatherIcon = document.createElement("img");
   weatherIcon.classList.add("weather-icon");
