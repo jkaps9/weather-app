@@ -90,7 +90,7 @@ function makeDayCard(
 function getWeather() {
   // const query = search.value;
   fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Pearl%20River%2C%20NY/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
+    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New%20York%2C%20NY/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
     { mode: "cors" },
   )
     .then(function (response) {
@@ -126,4 +126,45 @@ function getWeather() {
       console.log(e);
     });
 }
-getWeather();
+
+function transformWeatherData(jsonResponse) {
+  loc.textContent = jsonResponse.address;
+
+  for (let i = 0; i < jsonResponse.days.length; i++) {
+    const date = new Date(jsonResponse.days[i].datetime).toLocaleDateString(
+      "en-US",
+    );
+    const icon = jsonResponse.days[i].icon;
+    const description = i === 0 ? jsonResponse.days[i].description : "";
+    const currentTemp = Math.round(jsonResponse.days[i].temp);
+    const feelsLike = i === 0 ? Math.round(jsonResponse.days[i].feelslike) : "";
+    const minTemp = Math.round(jsonResponse.days[i].tempmin);
+    const maxTemp = Math.round(jsonResponse.days[i].tempmax);
+    const isToday = i === 0;
+    makeDayCard(
+      date,
+      icon,
+      currentTemp,
+      feelsLike,
+      description,
+      minTemp,
+      maxTemp,
+      isToday,
+    );
+  }
+}
+
+async function asyncGetWeather() {
+  try {
+    let response = await fetch(
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New%20York%2C%20NY/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
+      { mode: "cors" },
+    );
+    let json = await response.json();
+    transformWeatherData(json);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+asyncGetWeather();
