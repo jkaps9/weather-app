@@ -1,18 +1,27 @@
 import "./styles.css";
+import snowImage from "./images/cold.svg";
+import rainImage from "./images/rain.svg";
+import fogImage from "./images/fog.svg";
+import windImage from "./images/wind.svg";
+import cloudImage from "./images/cloudy.svg";
+import partlyCloudyImage from "./images/partly-cloudy-day.svg";
+import partlyCloudyNightImage from "./images/partly-cloudy-night.svg";
+import clearDayImage from "./images/clear-day.svg";
+import clearNightImage from "./images/clear-night.svg";
 
 const loc = document.querySelector("#location");
 const weatherData = document.querySelector("#weather-data");
 
 const icons = {
-  snow: "./images/snow.svg",
-  rain: "./images/rain.svg",
-  fog: "./images/fog.svg",
-  wind: "./images/wind.svg",
-  cloudy: "./images/cloudy.svg",
-  "partly-cloudy-day": "./images/partly-cloudy-day.svg",
-  "partly-cloudy-night": "./images/partly-cloudy-night.svg",
-  "clear-day": "./images/clear-day.svg",
-  "clear-night": "./images/clear-night.svg",
+  snow: snowImage,
+  rain: rainImage,
+  fog: fogImage,
+  wind: windImage,
+  cloudy: cloudImage,
+  "partly-cloudy-day": partlyCloudyImage,
+  "partly-cloudy-night": partlyCloudyNightImage,
+  "clear-day": clearDayImage,
+  "clear-night": clearNightImage,
 };
 
 function makeDayCard(
