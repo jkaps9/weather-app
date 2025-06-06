@@ -6,10 +6,16 @@ const loc = document.querySelector("#location");
 const weatherData = document.querySelector("#weather-data");
 const form = document.querySelector("form");
 const query = document.querySelector("#search");
-const tempPreference = "celsius";
+let tempPreference = "Fahrenheit";
+const tempPreferenceButton = document.querySelector("#preferred-unit");
+
+tempPreferenceButton.addEventListener("click", () => {
+  tempPreference = tempPreference === "Fahrenheit" ? "Celsius" : "Fahrenheit";
+  tempPreferenceButton.innerHTML = tempPreference;
+});
 
 function getPreferredTemperature(temperatureInFahrenheit) {
-  if (tempPreference === "fahrenheit") {
+  if (tempPreference === "Fahrenheit") {
     return temperatureInFahrenheit;
   } else {
     return fahrenheitToCelsius(temperatureInFahrenheit);
