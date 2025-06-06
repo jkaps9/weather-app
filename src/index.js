@@ -8,10 +8,14 @@ const form = document.querySelector("form");
 const query = document.querySelector("#search");
 let tempPreference = "Fahrenheit";
 const tempPreferenceButton = document.querySelector("#preferred-unit");
+let currentData = null;
 
 tempPreferenceButton.addEventListener("click", () => {
   tempPreference = tempPreference === "Fahrenheit" ? "Celsius" : "Fahrenheit";
   tempPreferenceButton.innerHTML = tempPreference;
+  if (currentData !== null) {
+    transformWeatherData();
+  }
 });
 
 function getPreferredTemperature(temperatureInFahrenheit) {
@@ -91,27 +95,28 @@ function makeDayCard(
   weatherData.appendChild(card);
 }
 
-function transformWeatherData(jsonResponse) {
-  loc.textContent = jsonResponse.resolvedAddress;
+function transformWeatherData() {
+  removeAllChildren(weatherData);
+  loc.textContent = currentData.resolvedAddress;
 
-  for (let i = 0; i < jsonResponse.days.length; i++) {
-    const date = new Date(jsonResponse.days[i].datetime).toLocaleDateString(
+  for (let i = 0; i < currentData.days.length; i++) {
+    const date = new Date(currentData.days[i].datetime).toLocaleDateString(
       "en-US",
     );
-    const icon = jsonResponse.days[i].icon;
-    const description = i === 0 ? jsonResponse.days[i].description : "";
+    const icon = currentData.days[i].icon;
+    const description = i === 0 ? currentData.days[i].description : "";
     const currentTemp = Math.round(
-      getPreferredTemperature(jsonResponse.days[i].temp),
+      getPreferredTemperature(currentData.days[i].temp),
     );
     const feelsLike =
       i === 0
-        ? Math.round(getPreferredTemperature(jsonResponse.days[i].feelslike))
+        ? Math.round(getPreferredTemperature(currentData.days[i].feelslike))
         : "";
     const minTemp = Math.round(
-      getPreferredTemperature(jsonResponse.days[i].tempmin),
+      getPreferredTemperature(currentData.days[i].tempmin),
     );
     const maxTemp = Math.round(
-      getPreferredTemperature(jsonResponse.days[i].tempmax),
+      getPreferredTemperature(currentData.days[i].tempmax),
     );
     const isToday = i === 0;
     makeDayCard(
@@ -134,8 +139,8 @@ async function getWeather(search) {
       { mode: "cors" },
     );
     let json = await response.json();
-    removeAllChildren(weatherData);
-    transformWeatherData(json);
+    currentData = json;
+    transformWeatherData();
   } catch (err) {
     console.log(err);
     if (search !== "") {
