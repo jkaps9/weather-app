@@ -1,10 +1,20 @@
 import "./styles.css";
 import getIcon from "./imageLoader";
+import { fahrenheitToCelsius } from "./tempconverter";
 
 const loc = document.querySelector("#location");
 const weatherData = document.querySelector("#weather-data");
 const form = document.querySelector("form");
 const query = document.querySelector("#search");
+const tempPreference = "celsius";
+
+function getPreferredTemperature(temperatureInFahrenheit) {
+  if (tempPreference === "fahrenheit") {
+    return temperatureInFahrenheit;
+  } else {
+    return fahrenheitToCelsius(temperatureInFahrenheit);
+  }
+}
 
 function removeAllChildren(element) {
   while (element.firstChild) {
@@ -84,10 +94,19 @@ function transformWeatherData(jsonResponse) {
     );
     const icon = jsonResponse.days[i].icon;
     const description = i === 0 ? jsonResponse.days[i].description : "";
-    const currentTemp = Math.round(jsonResponse.days[i].temp);
-    const feelsLike = i === 0 ? Math.round(jsonResponse.days[i].feelslike) : "";
-    const minTemp = Math.round(jsonResponse.days[i].tempmin);
-    const maxTemp = Math.round(jsonResponse.days[i].tempmax);
+    const currentTemp = Math.round(
+      getPreferredTemperature(jsonResponse.days[i].temp),
+    );
+    const feelsLike =
+      i === 0
+        ? Math.round(getPreferredTemperature(jsonResponse.days[i].feelslike))
+        : "";
+    const minTemp = Math.round(
+      getPreferredTemperature(jsonResponse.days[i].tempmin),
+    );
+    const maxTemp = Math.round(
+      getPreferredTemperature(jsonResponse.days[i].tempmax),
+    );
     const isToday = i === 0;
     makeDayCard(
       date,
