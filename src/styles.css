@@ -11,6 +11,18 @@
   --dim-gray: #686963;
 }
 
+input,
+button {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  color: inherit;
+  background-color: inherit;
+  cursor: pointer;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -24,13 +36,18 @@ body {
 body > * {
   width: 100%;
   max-width: 1400px;
-  padding: 15px;
+  padding: 24px;
 }
 
 header,
 footer {
   flex: 0;
   height: 72px;
+}
+
+header {
+  display: flex;
+  gap: 60px;
 }
 
 main {
@@ -107,16 +124,9 @@ img {
   padding-left: 12px;
 }
 
-input,
-button {
-  appearance: none;
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  color: inherit;
-  background-color: inherit;
-  cursor: pointer;
+label {
+  font-size: 1.2rem;
+  margin-right: 24px;
 }
 
 input {
@@ -124,6 +134,7 @@ input {
   border: 1px solid var(--dim-gray);
   color: var(--dim-gray);
   padding: 4px 8px;
+  margin-left: 4px;
 }
 
 input:focus {
@@ -133,10 +144,11 @@ input:focus {
 
 button {
   border: 1px solid var(--white-smoke);
-  padding: 4px 16px;
+  padding: 8px 16px;
 }
 
 button:hover {
   background-color: var(--white-smoke);
-  color: var(--charcoal);
+  color: var(--indian-red);
+  border-color: var(--indian-red);
 }
