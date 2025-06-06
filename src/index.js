@@ -11,6 +11,8 @@ import clearNightImage from "./images/clear-night.svg";
 
 const loc = document.querySelector("#location");
 const weatherData = document.querySelector("#weather-data");
+const form = document.querySelector("form");
+const query = document.querySelector("#search");
 
 const icons = {
   snow: snowImage,
@@ -87,46 +89,6 @@ function makeDayCard(
   weatherData.appendChild(card);
 }
 
-function getWeather() {
-  // const query = search.value;
-  fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New%20York%2C%20NY/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
-    { mode: "cors" },
-  )
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (response) {
-      loc.textContent = response.address;
-
-      for (let i = 0; i < response.days.length; i++) {
-        const date = new Date(response.days[i].datetime).toLocaleDateString(
-          "en-US",
-        );
-        const icon = response.days[i].icon;
-        const description = i === 0 ? response.days[i].description : "";
-        const currentTemp = Math.round(response.days[i].temp);
-        const feelsLike = i === 0 ? Math.round(response.days[i].feelslike) : "";
-        const minTemp = Math.round(response.days[i].tempmin);
-        const maxTemp = Math.round(response.days[i].tempmax);
-        const isToday = i === 0;
-        makeDayCard(
-          date,
-          icon,
-          currentTemp,
-          feelsLike,
-          description,
-          minTemp,
-          maxTemp,
-          isToday,
-        );
-      }
-    })
-    .catch(function (e) {
-      console.log(e);
-    });
-}
-
 function transformWeatherData(jsonResponse) {
   loc.textContent = jsonResponse.address;
 
@@ -154,17 +116,26 @@ function transformWeatherData(jsonResponse) {
   }
 }
 
-async function asyncGetWeather() {
+async function getWeather(search) {
   try {
     let response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/New%20York%2C%20NY/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${search}/today?unitGroup=us&key=VEU7VHUPV9DAQN7553J54U9CB&contentType=json`,
       { mode: "cors" },
     );
     let json = await response.json();
+    console.log(json);
     transformWeatherData(json);
   } catch (err) {
     console.log(err);
   }
 }
 
-asyncGetWeather();
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (query.value === "") {
+    return;
+  }
+
+  getWeather(query.value);
+});
