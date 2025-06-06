@@ -90,7 +90,7 @@ function makeDayCard(
 }
 
 function transformWeatherData(jsonResponse) {
-  loc.textContent = jsonResponse.address;
+  loc.textContent = jsonResponse.resolvedAddress;
 
   for (let i = 0; i < jsonResponse.days.length; i++) {
     const date = new Date(jsonResponse.days[i].datetime).toLocaleDateString(
