@@ -107,3 +107,37 @@ img {
   justify-self: start;
   padding-left: 12px;
 }
+
+input,
+button {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  color: inherit;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+input {
+  background-color: var(--white-smoke);
+  border: 1px solid var(--dim-gray);
+  color: var(--dim-gray);
+  padding: 4px 8px;
+}
+
+input:focus {
+  background-color: var(--dim-gray);
+  color: var(--white-smoke);
+}
+
+button {
+  border: 1px solid var(--white-smoke);
+  padding: 4px 16px;
+}
+
+button:hover {
+  background-color: var(--white-smoke);
+  color: var(--charcoal);
+}
