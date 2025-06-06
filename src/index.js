@@ -6,6 +6,12 @@ const weatherData = document.querySelector("#weather-data");
 const form = document.querySelector("form");
 const query = document.querySelector("#search");
 
+function removeAllChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.lastChild);
+  }
+}
+
 function makeDayCard(
   date,
   icon,
@@ -103,10 +109,13 @@ async function getWeather(search) {
       { mode: "cors" },
     );
     let json = await response.json();
-    console.log(json);
+    removeAllChildren(weatherData);
     transformWeatherData(json);
   } catch (err) {
     console.log(err);
+    if (search !== "") {
+      alert(search + " not found");
+    }
   }
 }
 
