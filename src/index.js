@@ -1,30 +1,10 @@
 import "./styles.css";
-import snowImage from "./images/cold.svg";
-import rainImage from "./images/rain.svg";
-import fogImage from "./images/fog.svg";
-import windImage from "./images/wind.svg";
-import cloudImage from "./images/cloudy.svg";
-import partlyCloudyImage from "./images/partly-cloudy-day.svg";
-import partlyCloudyNightImage from "./images/partly-cloudy-night.svg";
-import clearDayImage from "./images/clear-day.svg";
-import clearNightImage from "./images/clear-night.svg";
+import getIcon from "./imageLoader";
 
 const loc = document.querySelector("#location");
 const weatherData = document.querySelector("#weather-data");
 const form = document.querySelector("form");
 const query = document.querySelector("#search");
-
-const icons = {
-  snow: snowImage,
-  rain: rainImage,
-  fog: fogImage,
-  wind: windImage,
-  cloudy: cloudImage,
-  "partly-cloudy-day": partlyCloudyImage,
-  "partly-cloudy-night": partlyCloudyNightImage,
-  "clear-day": clearDayImage,
-  "clear-night": clearNightImage,
-};
 
 function makeDayCard(
   date,
@@ -52,7 +32,7 @@ function makeDayCard(
 
   const weatherIcon = document.createElement("img");
   weatherIcon.classList.add("weather-icon");
-  weatherIcon.src = icons[icon];
+  getIcon(icon, weatherIcon);
   weatherIcon.alt = icon;
   card.appendChild(weatherIcon);
 
